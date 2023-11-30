@@ -42,6 +42,15 @@ packer.init({
 return packer.startup(function(use)
   -- My plugins here
 
+  use({
+      "Dronakurl/injectme.nvim",
+      dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+          "nvim-lua/plenary.nvim",
+          "nvim-telescope/telescope.nvim",
+      },
+      cmd = { "InjectmeToggle", "InjectmeSave", "InjectmeInfo" , "InjectmeLeave"},
+  })
   use({ "wbthomason/packer.nvim" })
   use({ "nvim-lua/plenary.nvim" }) -- Common utilities
   use({ "nvim-lua/popup.nvim" })
