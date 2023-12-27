@@ -68,6 +68,11 @@ return packer.startup(function(use)
       },
       cmd = { "InjectmeToggle", "InjectmeSave", "InjectmeInfo" , "InjectmeLeave"},
   })
+  use{
+      'KaitlynEthylia/TreePin',
+      requires = {'nvim-treesitter/nvim-treesitter'},
+      config = function() require('treepin').setup() end,
+  }
   use({ "wbthomason/packer.nvim" })
   use({ "nvim-lua/plenary.nvim" }) -- Common utilities
   use({ "nvim-lua/popup.nvim" })
@@ -109,8 +114,7 @@ return packer.startup(function(use)
 
   use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
   use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
-  use({ "glepnir/lspsaga.nvim" }) -- LSP UIs
-
+  use({ "tami5/lspsaga.nvim", branch = "main", after = "nvim-lspconfig" })
   use {
     "SmiteshP/nvim-navic",
     requires = "neovim/nvim-lspconfig"
@@ -187,7 +191,10 @@ return packer.startup(function(use)
           require('Comment').setup()
       end
   }
-  use({ "nvim-tree/nvim-tree.lua"})
+  use({ "nvim-tree/nvim-tree.lua" })
+  use({ "udalov/kotlin-vim" })
+  use({ "julialang/julia-vim" })
+  use({ "SirVer/ultisnips" })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
