@@ -76,7 +76,7 @@ return packer.startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "nvim-lua/plenary.nvim" }) -- Common utilities
   use({ "nvim-lua/popup.nvim" })
-
+  use({ "RRethy/vim-illuminate" })
   -- Colorschemes
   use({ "EdenEast/nightfox.nvim" }) -- Color scheme
 
