@@ -195,6 +195,7 @@ return packer.startup(function(use)
   use({ "udalov/kotlin-vim" })
   use({ "julialang/julia-vim" })
   use({ "SirVer/ultisnips" })
+  use({ "knsh14/vim-github-link" })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
