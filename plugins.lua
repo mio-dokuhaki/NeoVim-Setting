@@ -73,6 +73,10 @@ return packer.startup(function(use)
       requires = {'nvim-treesitter/nvim-treesitter'},
       config = function() require('treepin').setup() end,
   }
+  use{
+      'xuhdev/vim-latex-live-preview',
+      ft = 'tex',
+  }
   use({ "wbthomason/packer.nvim" })
   use({ "nvim-lua/plenary.nvim" }) -- Common utilities
   use({ "nvim-lua/popup.nvim" })
@@ -196,6 +200,12 @@ return packer.startup(function(use)
   use({ "julialang/julia-vim" })
   use({ "SirVer/ultisnips" })
   use({ "knsh14/vim-github-link" })
+  use({
+      "ariel-frischer/bmessages.nvim",
+      config = function()
+          require("bmessages").setup({})
+      end,
+  })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
