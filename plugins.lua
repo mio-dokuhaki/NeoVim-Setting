@@ -206,6 +206,7 @@ return packer.startup(function(use)
           require("bmessages").setup({})
       end,
   })
+  use({ "David-Kunz/markid" })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
