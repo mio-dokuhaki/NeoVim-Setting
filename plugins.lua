@@ -206,6 +206,33 @@ return packer.startup(function(use)
           require("bmessages").setup({})
       end,
   })
+  use {
+      'cameron-wags/rainbow_csv.nvim',
+      config = function()
+          require 'rainbow_csv'.setup()
+      end,
+      -- optional lazy-loading below
+      module = {
+          'rainbow_csv',
+          'rainbow_csv.fns'
+      },
+      ft = {
+          'csv',
+          'tsv',
+          'csv_semicolon',
+          'csv_whitespace',
+          'csv_pipe',
+          'rfc_csv',
+          'rfc_semicolon'
+      }
+  }
+  use {
+      'akinsho/flutter-tools.nvim',
+      requires = {
+          'nvim-lua/plenary.nvim',
+          'stevearc/dressing.nvim', -- optional for vim.ui.select
+      },
+  }
   use({ "David-Kunz/markid" })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
