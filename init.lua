@@ -339,3 +339,5 @@ require('treepin').setup {
         zindex = 50, -- The Z-index of the pin buffer.
         separator = nil, -- A single character that may be used as a separator between the editing buffer and the pin buffer.
 }
+
+require("flutter-tools").setup {} -- use defaults
