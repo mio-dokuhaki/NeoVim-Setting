@@ -140,3 +140,5 @@ keymap("n", "<D-c>", '"+y', opts)
 keymap("n", "<C-e>", ":NvimTreeToggle<CR>", opts)
 
 keymap("n", "<C-f>", ":NvimTreeFindFile<CR>", opts)
+
+keymap("n", "<C-t>", ":Trim<CR>", opts)
