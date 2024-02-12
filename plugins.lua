@@ -235,6 +235,12 @@ return packer.startup(function(use)
   }
   use({ "David-Kunz/markid" })
   use({ "wakatime/vim-wakatime" })
+  use ({
+      "cappyzawa/trim.nvim",
+      config = function()
+        require("trim").setup({})
+      end
+  })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
