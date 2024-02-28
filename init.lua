@@ -8,50 +8,50 @@ require("plugins")
 require('lualine').setup()
 
 require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
+    options = {
+        icons_enabled = true,
+        theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = true,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+        }
     },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = true,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {
+        'fern',
+        'nerdtree',
+        'nvim-tree',
+        'fzf',
+        'quickfix'
     }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {
-      'fern',
-      'nerdtree',
-      'nvim-tree',
-      'fzf',
-      'quickfix'
-  }
 }
 
 require('lualine').get_config()
@@ -83,8 +83,8 @@ require("ibl").setup { indent = { highlight = highlight } }
 
 
 vim.opt.termguicolors = true
-require("bufferline").setup{}
-require("nvim-autopairs").setup{}
+require("bufferline").setup {}
+require("nvim-autopairs").setup {}
 require("nvim-autopairs").enable()
 
 vim.cmd([[au BufNewFile,BufRead *.v set filetype=vlang]])
@@ -92,100 +92,100 @@ vim.cmd([[au BufNewFile,BufRead *.v set filetype=vlang]])
 local status_ok, noice = pcall(require, "noice")
 
 noice.setup {
-  views = {
-    cmdline_popup = {
-      position = {
-        row = "40%",
-        col = "50%",
-      },
-      size = {
-        width = 60,
-        height = "auto",
-      },
-      border = {
-        style = "rounded",
-        padding = { 0, 1 },
-      },
-      win_options = {
-        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-      },
+    views = {
+        cmdline_popup = {
+            position = {
+                row = "40%",
+                col = "50%",
+            },
+            size = {
+                width = 60,
+                height = "auto",
+            },
+            border = {
+                style = "rounded",
+                padding = { 0, 1 },
+            },
+            win_options = {
+                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+            },
+        },
+        popupmenu = {
+            relative = "editor",
+            position = {
+                row = "50%",
+                col = "50%",
+            },
+            size = {
+                width = 60,
+                height = 10,
+            },
+            border = {
+                style = "rounded",
+                padding = { 0, 1 },
+            },
+            win_options = {
+                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+            },
+        },
     },
-    popupmenu = {
-      relative = "editor",
-      position = {
-        row = "50%",
-        col = "50%",
-      },
-      size = {
-        width = 60,
-        height = 10,
-      },
-      border = {
-        style = "rounded",
-        padding = { 0, 1 },
-      },
-      win_options = {
-        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-      },
+    cmdline = {
+        format = {
+            cmdline = { pattern = "^:", icon = "", lang = "vim" },
+            search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+            search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+            filter = { pattern = "^:%s*!", icon = "", lang = "bash" },
+            lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
+            help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+            input = {}, -- Used by input()
+        },
     },
-  },
-  cmdline = {
-    format = {
-      cmdline = { pattern = "^:", icon = "", lang = "vim" },
-      search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-      search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
-      filter = { pattern = "^:%s*!", icon = "", lang = "bash" },
-      lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" },
-      help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
-      input = {}, -- Used by input()
+    messages = {
+        enabled = true,
+        view = "mini", -- redirect messages to mini
+        view_error = "notify",
+        view_warn = "notify",
+        view_history = "messages",
+        view_search = false,
     },
-  },
-  messages = {
-    enabled = true,
-    view = "mini", -- redirect messages to mini
-    view_error = "notify",
-    view_warn = "notify",
-    view_history = "messages",
-    view_search = false,
-  },
-  lsp = {
-    progress = { enabled = false },
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
+    lsp = {
+        progress = { enabled = false },
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+        },
+        hover = { view = "hover" },
+        signature = { view = "hover" },
     },
-    hover = { view = "hover" },
-    signature = { view = "hover" },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    -- bottom_search = true, -- use a classic bottom cmdline for search
-    command_palette = false, -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = true, -- add a border to hover docs and signature help
-  },
+    -- you can enable a preset for easier configuration
+    presets = {
+        -- bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = false,      -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = true,        -- add a border to hover docs and signature help
+    },
 }
 
-require'cmp'.setup {
-  sources = {
-    { name = 'nvim_lsp_signature_help' }
-  }
+require 'cmp'.setup {
+    sources = {
+        { name = 'nvim_lsp_signature_help' }
+    }
 }
 
 local rt = require("rust-tools")
 
 rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
+    server = {
+        on_attach = function(_, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+        end,
+    },
 })
 
 require("mason").setup()
@@ -198,51 +198,51 @@ require("mason-lspconfig").setup {
 }
 
 require('mason').setup {
-  ui = {
-    check_outdated_packages_on_open = true,
-    border = 'single',
-  },
+    ui = {
+        check_outdated_packages_on_open = true,
+        border = 'single',
+    },
 }
 
 require('nvim-navic').setup {
-  lsp = {
-    auto_attach = true,
-  },
-  highlight = true,
+    lsp = {
+        auto_attach = true,
+    },
+    highlight = true,
 }
 
 require("solarized-osaka").setup({
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  transparent = false, -- Enable this to disable setting the background color
-  terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
-  styles = {
-    -- Style to be applied to different syntax groups
-    -- Value is any valid attr-list value for `:help nvim_set_hl`
-    comments = { italic = true },
-    keywords = { italic = true },
-    functions = {},
-    variables = {},
-    -- Background styles. Can be "dark", "transparent" or "normal"
-    sidebars = "dark", -- style for sidebars, see below
-    floats = "dark", -- style for floating windows
-  },
-  sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-  day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
-  hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-  dim_inactive = false, -- dims inactive windows
-  lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    transparent = false,    -- Enable this to disable setting the background color
+    terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
+    styles = {
+        -- Style to be applied to different syntax groups
+        -- Value is any valid attr-list value for `:help nvim_set_hl`
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = {},
+        variables = {},
+        -- Background styles. Can be "dark", "transparent" or "normal"
+        sidebars = "dark",            -- style for sidebars, see below
+        floats = "dark",              -- style for floating windows
+    },
+    sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+    day_brightness = 0.3,             -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+    hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+    dim_inactive = false,             -- dims inactive windows
+    lualine_bold = false,             -- When `true`, section headers in the lualine theme will be bold
 
-  --- You can override specific color groups to use other groups or a hex color
-  --- function will be called with a ColorScheme table
-  ---@param colors ColorScheme
-  on_colors = function(colors) end,
+    --- You can override specific color groups to use other groups or a hex color
+    --- function will be called with a ColorScheme table
+    ---@param colors ColorScheme
+    on_colors = function(colors) end,
 
-  --- You can override specific highlights to use other groups or a hex color
-  --- function will be called with a Highlights and ColorScheme table
-  ---@param highlights Highlights
-  ---@param colors ColorScheme
-  on_highlights = function(highlights, colors) end,
+    --- You can override specific highlights to use other groups or a hex color
+    --- function will be called with a Highlights and ColorScheme table
+    ---@param highlights Highlights
+    ---@param colors ColorScheme
+    on_highlights = function(highlights, colors) end,
 })
 
 require("terminal").setup()
@@ -269,18 +269,18 @@ require("nvim-tree").setup()
 
 -- OR setup with some options
 require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
+    sort = {
+        sorter = "case_sensitive",
+    },
+    view = {
+        width = 30,
+    },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = true,
+    },
 })
 
 if vim.g.neovide then
@@ -297,11 +297,11 @@ if vim.g.neovide then
     vim.g.neovide_cursor_vfx_mode = "railgun"
     vim.g.neovide_cursor_animation_length = 0.1
     local function set_ime(args)
-      if args.event:match("Enter$") then
-        vim.g.neovide_input_ime = true
-      else
-        vim.g.neovide_input_ime = false
-      end
+        if args.event:match("Enter$") then
+            vim.g.neovide_input_ime = true
+        else
+            vim.g.neovide_input_ime = false
+        end
     end
 
     local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
@@ -321,25 +321,89 @@ end
 
 require("scrollbar").setup()
 
-require'lspconfig'.julials.setup{
+require 'lspconfig'.julials.setup {
     on_new_config = function(new_config, _)
         local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-        if require'lspconfig'.util.path.is_file(julia) then
-	    vim.notify("Hello!")
+        if require 'lspconfig'.util.path.is_file(julia) then
+            vim.notify("Hello!")
             new_config.cmd[1] = julia
         end
     end
 }
 
 require('treepin').setup {
-	hide_onscreen = true, -- Hide's the pin buffer when the text of the pin is visible.
-	max_height = 30, -- Prevents the pin buffer from displaying when the pin is larger than x lines.
-	position = 'relative', -- May be 'relative', 'top', or 'bottom'. Determines the position of the pin buffer within the window.
-	icon = '>', -- The icon to display in the sign column at the top of the pin. Set to nil to prevent the sign column being used.
-	zindex = 50, -- The Z-index of the pin buffer.
-	separator = nil, -- A single character that may be used as a separator between the editing buffer and the pin buffer.
+    hide_onscreen = true,  -- Hide's the pin buffer when the text of the pin is visible.
+    max_height = 30,       -- Prevents the pin buffer from displaying when the pin is larger than x lines.
+    position = 'relative', -- May be 'relative', 'top', or 'bottom'. Determines the position of the pin buffer within the window.
+    icon = '>',            -- The icon to display in the sign column at the top of the pin. Set to nil to prevent the sign column being used.
+    zindex = 50,           -- The Z-index of the pin buffer.
+    separator = nil,       -- A single character that may be used as a separator between the editing buffer and the pin buffer.
 }
 
 require("flutter-tools").setup {} -- use defaults
 
 require('trim').setup()
+
+require("inlay-hints").setup()
+
+local ih = require("inlay-hints")
+local lspconfig = require("lspconfig")
+
+lspconfig.sumneko_lua.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    settings = {
+        Lua = {
+            hint = {
+                enable = true,
+            },
+        },
+    },
+})
+
+require("rust-tools").setup({
+    tools = {
+        on_initialized = function()
+            ih.set_all()
+        end,
+        inlay_hints = {
+            auto = false,
+        },
+    },
+    server = {
+        on_attach = function(c, b)
+            ih.on_attach(c, b)
+        end,
+    },
+})
+
+lspconfig.tsserver.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    settings = {
+        javascript = {
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+            },
+        },
+        typescript = {
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+            },
+        },
+    },
+})
