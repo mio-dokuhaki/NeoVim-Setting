@@ -20,10 +20,10 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<D-h>", "<C-w>h", opts)
+keymap("n", "<D-j>", "<C-w>j", opts)
+keymap("n", "<D-k>", "<C-w>k", opts)
+keymap("n", "<D-l>", "<C-w>l", opts)
 
 -- New tab
 keymap("n", "te", ":tabedit", opts)
@@ -38,7 +38,7 @@ keymap("n", "ss", ":split<Return><C-w>w", opts)
 keymap("n", "sv", ":vsplit<Return><C-w>w", opts)
 
 -- Select all
-keymap("n", "<C-a>", "gg<S-v>G", opts)
+keymap("n", "<D-a>", "gg<S-v>G", opts)
 
 -- Do not yank with x
 keymap("n", "x", '"_x', opts)
@@ -81,10 +81,10 @@ keymap("v", ">", ">gv", opts)
 keymap("v", "v", "$h", opts)
 
 -- 0番レジスタを使いやすくした
-keymap("v", "<C-p>", '"0p', opts)
+keymap("v", "<D-p>", '"0p', opts)
 
 -- NerdTree
-keymap("n", "<C-e>", ":NERDTreeToggle<CR>", opts)
+keymap("n", "<D-e>", ":NERDTreeToggle<CR>", opts)
 
 keymap("n", "<Nop>n", ":NERDTreeFocus<CR>", opts)
 
@@ -103,9 +103,9 @@ keymap("n", "P", ":PackerInstall<CR>", opts)
 -- coc marketplace
 keymap("n", "L", ":CocList marketplace<CR>", opts)
 
-keymap("i", "<C-n>", 'pumvisible() ? "<Down>" : "<C-n>"', opts)
+keymap("i", "<D-n>", 'pumvisible() ? "<Down>" : "<C-n>"', opts)
 
-keymap("i", "<C-p>", 'pumvisible() ? "<Up>" : "<C-p>"', opts)
+keymap("i", "<D-p>", 'pumvisible() ? "<Up>" : "<C-p>"', opts)
 
 keymap("i", "<CR>", 'pumvisible() ? "<C-y>" : "<CR>"', opts)
 
@@ -142,3 +142,10 @@ keymap("n", "<C-e>", ":NvimTreeToggle<CR>", opts)
 keymap("n", "<C-f>", ":NvimTreeFindFile<CR>", opts)
 
 keymap("n", "<C-t>", ":Trim<CR>", opts)
+
+-- Normal modeでの設定
+-- d で現在の行を削除
+keymap("n", "dl", '"_dd', opts)
+
+-- da でファイル全体を削除
+keymap("n", "da", 'gg"_dG', opts)
