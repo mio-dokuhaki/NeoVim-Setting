@@ -5,8 +5,6 @@ require("keymaps")
 require("colorscheme")
 require("plugins")
 
-require('lualine').setup()
-
 require('lualine').setup {
     options = {
         icons_enabled = true,
@@ -188,9 +186,6 @@ rt.setup({
     },
 })
 
-require("mason").setup()
-require("mason-lspconfig").setup()
-
 require("mason-lspconfig").setup {
     ensure_installed = { "lua_ls", "rust_analyzer", "vls", "haxe_language_server" },
     automatic_installation = true,
@@ -263,9 +258,6 @@ vim.g.loaded_netrwPlugin = 1
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
-
--- empty setup using defaults
-require("nvim-tree").setup()
 
 -- OR setup with some options
 require("nvim-tree").setup({
