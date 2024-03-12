@@ -378,6 +378,8 @@ lspconfig.tsserver.setup({
     on_attach = function(c, b)
         ih.on_attach(c, b)
     end,
+    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    cmd = { "typescript-language-server", "--stdio" },
     settings = {
         javascript = {
             inlayHints = {
