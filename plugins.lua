@@ -242,6 +242,8 @@ return packer.startup(function(use)
         end
     })
     use({ "simrat39/inlay-hints.nvim" })
+    use({ "pechorin/any-jump.vim" })
+    use({ "rcarriga/nvim-notify" })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
