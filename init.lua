@@ -407,4 +407,145 @@ lspconfig.tsserver.setup({
 })
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.jsonc.used_by = "jsonc"
+parser_config.json.used_by = "jsonc"
+-- tailwindcss
+parser_config.html.used_by = "svelte"
+parser_config.css.used_by = "svelte"
+parser_config.javascript.used_by = "svelte"
+parser_config.typescript.used_by = "svelte"
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+parser_config.svelte = {
+    install_info = {
+        url = ""
+    },
+    used_by = { "html", "javascript", "typescript" },
+}
+
+-- tailwindcss using lspconfig
+lspconfig.html.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    filetypes = { "svelte" },
+    cmd = { "html-languageserver", "--stdio" },
+    settings = {
+        html = {
+            suggest = {
+                typescript = {
+                    enabled = true,
+                },
+            },
+        },
+    },
+})
+
+lspconfig.cssls.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    filetypes = { "svelte" },
+    cmd = { "css-languageserver", "--stdio" },
+    settings = {
+        css = {
+            suggest = {
+                typescript = {
+                    enabled = true,
+                },
+            },
+        },
+    },
+})
+
+lspconfig.tsserver.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    filetypes = { "svelte" },
+    cmd = { "typescript-language-server", "--stdio" },
+    settings = {
+        javascript = {
+            suggest = {
+                typescript = {
+                    enabled = true,
+                },
+            },
+        },
+        typescript = {
+            suggest = {
+                typescript = {
+                    enabled = true,
+                },
+            },
+        },
+    },
+})
+
+lspconfig.svelte.setup({
+    on_attach = function(c, b)
+        ih.on_attach(c, b)
+    end,
+    filetypes = { "svelte" },
+    cmd = { "svelteserver", "--stdio" },
+    settings = {
+        svelte = {
+            plugin = {
+                css = {
+                    enable = true,
+                },
+                html = {
+                    enable = true,
+                },
+                script = {
+                    enable = true,
+                },
+            },
+        },
+    },
+})
+
+require("nvim-treesitter.configs").setup {
+    ensure_installed = "maintained",
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true,
+    },
+    incremental_selection = {
+        enable = true,
+    },
+    refactor = {
+        highlight_definitions = { enable = true },
+        highlight_current_scope = { enable = true },
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+            },
+        },
+    },
+    playground = {
+        enable = true,
+        disable = {},
+        updatetime = 25,
+        persist_queries = false,
+    },
+    query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { "BufWrite", "CursorHold" },
+    },
+}
+
+require('cmp').setup.filetype({ 'lisp' }, {
+    sources = {
+        { name = 'nvlime' }
+    }
+})
+
+require 'lspconfig'.racket_langserver.setup {}
