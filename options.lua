@@ -42,6 +42,7 @@ local options = {
     guifont = "Mononoki Nerd Font Mono:h28:i",
     splitbelow = false, -- オンのとき、ウィンドウを横分割すると新しいウィンドウはカレントウィンドウの下に開かれる
     splitright = false, -- オンのとき、ウィンドウを縦分割すると新しいウィンドウはカレントウィンドウの右に開かれる
+    inccommand = "split",
 }
 
 vim.opt.shortmess:append("c")
