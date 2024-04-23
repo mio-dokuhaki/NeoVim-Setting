@@ -244,6 +244,34 @@ return packer.startup(function(use)
     use({ "simrat39/inlay-hints.nvim" })
     use({ "pechorin/any-jump.vim" })
     use({ "rcarriga/nvim-notify" })
+    use({ "HiPhish/quicklisp.nvim" })
+    use({
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    })
+    use({ "l04m33/vlime" })
+    use({ 'kaarmu/typst.vim', ft = { 'typst' } })
+    use({
+        'chomosuke/typst-preview.nvim',
+        tag = 'v0.1.*',
+        run = function() require 'typst-preview'.update() end,
+    })
+    use({ "voldikss/vim-mma" })
+    use({ "jaawerth/fennel-nvim" })
+    use({
+        "smjonas/inc-rename.nvim",
+        config = function()
+            require("inc_rename").setup()
+        end,
+    })
+    use({ "nanotee/sqls.nvim" })
+    use({ "adolenc/cl-neovim" })
+    use({
+        "UltiRequiem/coc-cl",
+        run = 'yarn install --frozen-lockfile && yarn build'
+    })
+    use({ "cxxxr/cl-lsp" })
+    use({ "jrop/jq.nvim" })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
