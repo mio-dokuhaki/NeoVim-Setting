@@ -147,5 +147,16 @@ keymap("n", "<C-t>", ":Trim<CR>", opts)
 -- d で現在の行を削除
 keymap("n", "dl", '"_dd', opts)
 
+-- visual modeで選択行の削除
+keymap("v", "d", '"_d', opts)
+
 -- da でファイル全体を削除
 keymap("n", "da", 'gg"_dG', opts)
+
+-- todo-comments のジャンプ機能のキーマッピング
+keymap('n', ']t', "<cmd>lua require('todo-comments').jump_next()<CR>", opts)
+keymap('n', '[t', "<cmd>lua require('todo-comments').jump_prev()<CR>", opts)
+
+-- 特定のキーワードにジャンプする機能のキーマッピング
+-- ここでは例として 'ERROR' と 'WARNING' に限定しています
+keymap('n', ']t', "<cmd>lua require('todo-comments').jump_next({keywords = {'ERROR', 'WARNING'}})<CR>", opts)
