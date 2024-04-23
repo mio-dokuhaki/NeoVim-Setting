@@ -164,6 +164,7 @@ noice.setup {
         long_message_to_split = true, -- long messages will be sent to a split
         -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = true,        -- add a border to hover docs and signature help
+        inc_rename = true,            -- use inc-rename.nvim for renaming
     },
 }
 
@@ -548,4 +549,93 @@ require('cmp').setup.filetype({ 'lisp' }, {
     }
 })
 
-require 'lspconfig'.racket_langserver.setup {}
+lspconfig.racket_langserver.setup {}
+
+-- Function to simulate getting a list of all packages containing "vim" in their name
+function QuicklispSystemApropos(package_name)
+    -- Simulated data retrieval (replace this with actual logic to query Quicklisp)
+    local packages = {
+        "vim-lisp",
+        "slime-vim",
+        "quicklisp-vim",
+        "vim-utilities",
+        "common-vim"
+    }
+    -- Filter packages based on the package_name substring
+    local filtered_packages = {}
+    for _, pkg in ipairs(packages) do
+        if string.find(pkg, package_name) then
+            table.insert(filtered_packages, pkg)
+        end
+    end
+    return filtered_packages
+end
+
+-- Function to simulate getting a list of all packages depending on 'cl-messagepack'
+function QuicklispWhoDependsOn(dependency)
+    -- Simulated data retrieval (replace this with actual logic to query Quicklisp)
+    local packages = {
+        "cl-websocket",
+        "cl-rest-client",
+        "cl-serialization",
+        "cl-messagepack-utils"
+    }
+    -- Assuming all these packages depend on 'cl-messagepack'
+    return packages
+end
+
+-- Retrieve packages with "vim" in their name
+local vim_packages = QuicklispSystemApropos('vim')
+-- Retrieve packages depending on 'cl-messagepack'
+local msgpack_packages = QuicklispWhoDependsOn('cl-messagepack')
+
+-- Print results
+print("Packages containing 'vim':")
+for _, pkg in ipairs(vim_packages) do
+    print(pkg)
+end
+
+print("Packages depending on 'cl-messagepack':")
+for _, pkg in ipairs(msgpack_packages) do
+    print(pkg)
+end
+
+require 'lspconfig.configs'.fennel_language_server = {
+    default_config = {
+        -- replace it with true path
+        cmd = { '/Users/mio-dokuhaki/.cargo/bin/fennel-language-server' },
+        filetypes = { 'fennel' },
+        single_file_support = true,
+        -- source code resides in directory `fnl/`
+        root_dir = lspconfig.util.root_pattern("fnl"),
+        settings = {
+            fennel = {
+                workspace = {
+                    -- If you are using hotpot.nvim or aniseed,
+                    -- make the server aware of neovim runtime files.
+                    library = vim.api.nvim_list_runtime_paths(),
+                },
+                diagnostics = {
+                    globals = { 'vim' },
+                },
+            },
+        },
+    },
+}
+
+lspconfig.fennel_language_server.setup {}
+
+require("inc_rename").setup {
+    cmd_name = "IncRename",     -- the name of the command
+    hl_group = "Substitute",    -- the highlight group used for highlighting the identifier's new name
+    preview_empty_name = false, -- whether an empty new name should be previewed; if false the command preview will be cancelled instead
+    show_message = true,        -- whether to display a `Renamed m instances in n files` message after a rename operation
+    input_buffer_type = nil,    -- the type of the external input buffer to use (the only supported value is currently "dressing")
+    post_hook = nil,            -- callback to run after renaming, receives the result table (from LSP handler) as an argument
+}
+
+require('lspconfig').sqls.setup {
+    on_attach = function(client, bufnr)
+        require('sqls').on_attach(client, bufnr)
+    end
+}
