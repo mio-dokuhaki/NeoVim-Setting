@@ -161,10 +161,9 @@ noice.setup {
     presets = {
         -- bottom_search = true, -- use a classic bottom cmdline for search
         command_palette = false,      -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        long_message_to_split = false, -- long messages will be sent to a split
+        inc_rename = true, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = true,        -- add a border to hover docs and signature help
-        inc_rename = true,            -- use inc-rename.nvim for renaming
     },
 }
 
@@ -639,3 +638,33 @@ require('lspconfig').sqls.setup {
         require('sqls').on_attach(client, bufnr)
     end
 }
+
+vim.g.lisp_host_enable_tests = 1
+
+lspconfig.scheme_langserver.setup {}
+
+lspconfig.guile_ls.setup {}
+
+lspconfig.emmet_ls.setup {}
+
+lspconfig.racket_langserver.setup {}
+
+require 'lspconfig.configs'.lsp_wl = {
+    default_config = {
+    cmd = {
+      "wolfram",
+      "kernel",
+      "-noinit",
+      "-noprompt",
+      "-nopaclet",
+      "-noicon",
+      "-nostartuppaclets",
+      "-run",
+      'Needs["LSPServer`"];LSPServer`StartServer[]',
+    },
+    filetypes = { "mma", "wl" },
+    root_dir = nvim_lsp.util.path.dirname,
+  },
+}
+
+nvim_lsp.lsp_wl.setup({ on_attach = lsp_attach({}) })
