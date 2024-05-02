@@ -249,7 +249,11 @@ return packer.startup(function(use)
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" }
     })
-    use({ "l04m33/vlime" })
+    use({ "vlime/vlime",
+        config = function()
+            rtp = 'vim/'
+        end
+    })
     use({ 'kaarmu/typst.vim', ft = { 'typst' } })
     use({
         'chomosuke/typst-preview.nvim',
@@ -272,6 +276,7 @@ return packer.startup(function(use)
     })
     use({ "cxxxr/cl-lsp" })
     use({ "jrop/jq.nvim" })
+    use({ "stevearc/gkeep.nvim" , run = ':UpdateRemotePlugins' })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
