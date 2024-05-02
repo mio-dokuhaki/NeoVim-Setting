@@ -686,3 +686,16 @@ local gitui = fterm:new({
 vim.keymap.set('n', '<A-g>', function()
     gitui:toggle()
 end)
+
+require('nvim-cursorline').setup {
+  cursorline = {
+    enable = true,
+    timeout = 1000,
+    number = false,
+  },
+  cursorword = {
+    enable = true,
+    min_length = 3,
+    hl = { underline = true },
+  }
+}
