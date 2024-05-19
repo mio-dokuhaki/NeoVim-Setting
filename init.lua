@@ -246,10 +246,46 @@ require('dap-ruby').setup()
 
 require('Comment').setup()
 
-require('nvim-treesitter.configs').setup {
-    endwise = {
-        enable = true,
-    },
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (or "all")
+  ignore_install = { "javascript" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    disable = function(lang, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
 
 -- disable netrw at the very start of your init.lua
@@ -288,6 +324,9 @@ if vim.g.neovide then
     vim.g.neovide_cursor_animate_command_line = true
     vim.g.neovide_cursor_vfx_mode = "railgun"
     vim.g.neovide_cursor_animation_length = 0.1
+    vim.g.neovide_transparency = 0.5
+    vim.g.neovide_show_border = true
+    vim.g.neovide_hide_mouse_when_typing = true
     local function set_ime(args)
         if args.event:match("Enter$") then
             vim.g.neovide_input_ime = true
@@ -341,22 +380,38 @@ require("inlay-hints").setup()
 local ih = require("inlay-hints")
 local lspconfig = require("lspconfig")
 
-lspconfig.sumneko_lua.setup({
-    on_attach = function(c, b)
-        ih.on_attach(c, b)
-    end,
-    settings = {
-        Lua = {
-            hint = {
-                enable = true,
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-        },
-    },
-})
+require'lspconfig'.lua_ls.setup {
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      return
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      runtime = {
+        -- Tell the language server which version of Lua you're using
+        -- (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT'
+      },
+      -- Make the server aware of Neovim runtime files
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+          -- Depending on the usage, you might want to add additional paths here.
+          -- "${3rd}/luv/library"
+          -- "${3rd}/busted/library",
+        }
+        -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+        -- library = vim.api.nvim_get_runtime_file("", true)
+      }
+    })
+  end,
+  settings = {
+    Lua = {}
+  }
+}
+
 
 require("rust-tools").setup({
     tools = {
@@ -649,38 +704,7 @@ lspconfig.emmet_ls.setup {}
 
 lspconfig.racket_langserver.setup {}
 
-require 'lspconfig.configs'.lsp_wl = {
-    default_config = {
-    cmd = {
-      "wolfram",
-      "kernel",
-      "-noinit",
-      "-noprompt",
-      "-nopaclet",
-      "-noicon",
-      "-nostartuppaclets",
-      "-run",
-      'Needs["LSPServer`"];LSPServer`StartServer[]',
-    },
-    filetypes = { "mma", "wl" },
-    root_dir = nvim_lsp.util.path.dirname,
-  },
-}
-
-nvim_lsp.lsp_wl.setup({ on_attach = lsp_attach({}) })
-
-require 'FTerm'.setup {}
-
-local fterm = require("FTerm")
-
-local gitui = fterm:new({
-    ft = 'fterm_gitui', -- You can also override the default filetype, if you want
-    cmd = "gitui",
-    dimensions = {
-        height = 0.9,
-        width = 0.9
-    }
-})
+lspconfig.lua_ls.setup {}
 
 -- Use this to toggle gitui in a floating terminal
 vim.keymap.set('n', '<A-g>', function()
@@ -698,4 +722,16 @@ require('nvim-cursorline').setup {
     min_length = 3,
     hl = { underline = true },
   }
+}
+
+lspconfig.clojure_lsp.setup {}
+
+vim.g.LanguageClient_serverCommands = {
+    prolog = {
+        'swipl',
+        '-g', 'use_module(library(lsp_server)).',
+        '-g', 'lsp_server:main',
+        '-t', 'halt',
+        '--', 'stdio'
+    }
 }
