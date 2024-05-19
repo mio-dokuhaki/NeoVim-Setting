@@ -279,6 +279,7 @@ return packer.startup(function(use)
     use({ "stevearc/gkeep.nvim" , run = ':UpdateRemotePlugins' })
     use({ "numToStr/FTerm.nvim" })
     use({ "yamatsum/nvim-cursorline" })
+    use({ "rizzatti/dash.vim" })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
